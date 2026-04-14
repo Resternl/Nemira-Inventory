@@ -37,6 +37,9 @@ class inven extends Controller
             'jenis_item' => 'required',
             'jumlah_item' => 'required|integer',
         ]);
+
+        item::create($request->all());
+        return redirect()->route('inventory.index')->with('success', 'Item berhasil ditambahkan');
     }
 
     /**
