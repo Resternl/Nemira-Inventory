@@ -47,7 +47,7 @@ class inven extends Controller
      */
     public function show(string $id)
     {
-        //
+
     }
 
     /**
