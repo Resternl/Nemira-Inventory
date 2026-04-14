@@ -1,36 +1,46 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nemira Inventory</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="bg-white antialiased">
+    <div class="flex min-h-screen">
+        <aside class="w-64 bg-[#0A052E] text-white flex flex-col p-6 fixed h-full">
+            <div class="mb-10">
+                <h1 class="text-3xl font-bold text-[#2563EB]">Nemira</h1>
+                <p class="text-sm text-gray-400 font-semibold">Inventory system</p>
+            </div>
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+            <nav class="flex-1 space-y-4">
+                <a href="{{ route('inventory.index') }}" 
+                 class="block px-4 py-3 rounded-xl font-medium transition {{ Request::is('inventory') ? 'bg-[#0055A5]' : 'hover:bg-gray-800' }}">
+                 Dashbord
+                </a>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+                <a href="{{ route('inventory.create') }}" 
+                class="block px-4 py-3 rounded-xl font-medium transition {{ Request::is('inventory/create') ? 'bg-[#0055A5]' : 'hover:bg-gray-800' }}">
+                Tambah Barang
+                </a>
+                </nav>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+            <div class="mt-auto pt-10 border-t border-gray-800 flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-400">login ass:</p>
+                    <p class="font-bold">{{ Auth::user()->name }}</p>
+                </div>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="bg-[#FF0000] text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg">Log Out</button>
+                </form>
+            </div>
+        </aside>
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+        <main class="flex-1 ml-64 p-10">
+            @yield('content')
+        </main>
+    </div>
+</body>
 </html>
