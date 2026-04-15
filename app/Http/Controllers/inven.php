@@ -11,11 +11,41 @@ class inven extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $inventory = item::all();
-        return view('index', compact('inventory'));
+public function index(Request $request) // Tambahin Request $request di sini
+{
+    // 1. Ambil inputan dari user (Search, Sort, dan Filter Jenis)
+    $search = $request->get('search');
+    $sort = $request->get('sort', 'latest');
+    $filter_jenis = $request->get('jenis');
+
+    $query = item::query();
+
+    if ($search) {
+        $query->where(function($q) use ($search) {
+            $q->where('nama_item', 'LIKE', "%{$search}%")
+              ->orWhere('kode_item', 'LIKE', "%{$search}%");
+        });
     }
+
+    if ($filter_jenis) {
+        $query->where('jenis_item', $filter_jenis);
+    }
+
+    if ($sort == 'stok_sedikit') {
+        $query->orderBy('jumlah_item', 'asc');
+    } elseif ($sort == 'stok_banyak') {
+        $query->orderBy('jumlah_item', 'desc');
+    } elseif ($sort == 'a_z') {
+        $query->orderBy('nama_item', 'asc');
+    } else {
+        $query->orderBy('created_at', 'desc'); 
+    }
+
+    $inventory = $query->get();
+    
+    $categories = item::select('jenis_item')->distinct()->pluck('jenis_item');
+    return view('index', compact('inventory', 'categories'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -47,7 +77,8 @@ class inven extends Controller
      */
     public function show(string $id)
     {
-
+        $item = item::findOrFail($id);
+        return view('show', compact('item'));
     }
 
     /**
