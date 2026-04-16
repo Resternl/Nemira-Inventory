@@ -26,15 +26,31 @@
                 </a>
                 </nav>
 
-            <div class="mt-auto pt-10 border-t border-gray-800 flex items-center justify-between">
-                <div>
-                    <p class="text-xs text-gray-400">login ass:</p>
-                    <p class="font-bold">{{ Auth::user()->name }}</p>
+            <div class="mt-auto px-6 pb-6 space-y-4">
+    
+                <div class="space-y-1">
+                    <div class="flex justify-between items-center">
+                        <span class="text-white/60 text-[10px] font-bold uppercase tracking-widest">Jumlah Item:</span>
+                        <span class="text-white text-sm font-medium">{{ $titem }}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-white/60 text-[10px] font-bold uppercase tracking-widest">Jumlah Stok:</span>
+                        <span class="text-white text-sm font-medium">{{ $tstock }}</span>
+                    </div>
                 </div>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="bg-[#FF0000] text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg">Log Out</button>
-                </form>
+
+                <div class="mt-auto pt-10 border-t border-gray-800 flex items-center justify-between">
+                            <div>
+                                <p class="text-xs text-gray-400">login ass:</p>
+                                <p class="font-bold">{{ Auth::user()->name }}</p>
+                            </div>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="bg-[#FF0000] text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg">Log Out</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </aside>
 
@@ -44,3 +60,5 @@
     </div>
 </body>
 </html>
+
+
