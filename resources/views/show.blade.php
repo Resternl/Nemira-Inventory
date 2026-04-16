@@ -39,7 +39,7 @@
                         <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Jumlah</label>
                         <input type="number" 
                             value="{{ $item->jumlah_item ?? '' }}" 
-                            class="w-full p-3 border border-gray-200 bg-gray-50 rounded-xl outline-none shadow-sm cursor-default font-bold text-[#003CBB]" 
+                            class="w-full p-3 border border-gray-200 bg-gray-50 rounded-xl outline-none shadow-sm cursor-default" 
                             readonly>
                     </div>
                 </div>
