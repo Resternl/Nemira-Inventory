@@ -21,4 +21,6 @@ Route::get('/', function () {
     return auth()->check() ? redirect('/inventory') : redirect('/login');
 });
 
+Route::get('/inventory/logs', [inven::class, 'logs'])->name('inventory.logs');
+
 require __DIR__.'/auth.php';
