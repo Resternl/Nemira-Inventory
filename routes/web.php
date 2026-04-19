@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\aktivitas;
 use App\Http\Controllers\inven;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,6 @@ Route::get('/', function () {
     return auth()->check() ? redirect('/inventory') : redirect('/login');
 });
 
-Route::get('/inventory/logs', [inven::class, 'logs'])->name('inventory.logs');
+Route::get('/', [aktivitas::class, 'index'])->name('inventory.logs');
 
 require __DIR__.'/auth.php';

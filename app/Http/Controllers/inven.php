@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\item;
 use App\Models\riwayat;
-use Illuminate\Support\Facades\Auth;
+
 
 class inven extends Controller
 {
@@ -71,13 +71,7 @@ public function index(Request $request) // Tambahin Request $request di sini
         ]);
 
         item::create($request->all());
-
-        riwayat::create([
-        'username' => auth()->user()->name,
-        'action' => 'Adding',
-        'nama_item' => $request->nama_item
-        ]);
-
+        riwayat::record('create', $request->nama_item);
         return redirect()->route('inventory.index')->with('success', 'Item berhasil ditambahkan');
     }
 
@@ -113,14 +107,7 @@ public function index(Request $request) // Tambahin Request $request di sini
             'jumlah_item' => 'required|integer',
         ]);
         $item->update($request->all());
-            
-        riwayat::update([
-        'username' => auth()->user()->name,
-        'action' => 'Update',
-        'nama_item' => $request->nama_item
-        ]);
-
-
+        riwayat::record('update', $request->nama_item);
         return redirect()->route('inventory.index')->with('success', 'Item berhasil diperbarui');
     }
 
@@ -130,20 +117,9 @@ public function index(Request $request) // Tambahin Request $request di sini
     public function destroy(string $id)
     {
         $item = item::findOrFail($id);
-
-        riwayat::create([
-        'username' => auth()->user()->name,
-        'action' => 'Delete',
-        'nama_item' => $item->nama_item
-        ]);
-        
+        riwayat::record('delete', $item->nama_item);
         $item->delete();
         return redirect()->route('inventory.index')->with('success', 'Item berhasil dihapus');
-    }
-
-    public function logs() {
-    $logs = riwayat::latest()->get();
-    return view('logs', compact('logs'));
     }
 
 }

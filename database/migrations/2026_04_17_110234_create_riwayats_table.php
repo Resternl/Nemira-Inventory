@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('riwayats', function (Blueprint $table) {
-            $table->id();
-            $table->string('username')->unique();
-            $table->string('action');
-            $table->string('nama_item');
-            $table->timestamps();
-        });
+        Schema::create('riwayat', function (Blueprint $table) {
+        $table->id();
+        $table->string('username');
+        $table->string('action');
+        $table->string('nama_item');
+        $table->timestamps();
+    });
     }
 
     /**
